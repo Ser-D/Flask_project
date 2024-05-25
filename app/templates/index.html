@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>Welcome to My project</h1>
+    {% if tickets %}
+        <h2>Tickets</h2>
+        <ul>
+            {% for ticket in tickets %}
+                <li>Ticket ID: {{ ticket.id }}, Status: {{ ticket.status }}, WTF: {{ ticket.note }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tickets available.</p>
+    {% endif %}
+</body>
+</html>
+{% endblock %}
