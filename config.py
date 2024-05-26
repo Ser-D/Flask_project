@@ -1,18 +1,9 @@
-from pydantic import ConfigDict
-from pydantic_settings import BaseSettings
+from dotenv import dotenv_values
+
+config_env = dotenv_values(".env")
 
 
-class Settings(BaseSettings):
-    POSTGRES_DB: str = "Flask_project"
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "postgres"
-    POSTGRES_PORT: int = 5432
-    POSTGRES_DOMAIN: str = "postgres"
-    SQLALCHEMY_DATABASE_URI: str = "postgresql://postgres:postgres@localhost:5432/Flask_project"
-    DB_URL_ASYNCIO: str = "postgres"
-    SECRET_KEY: str = "postgres"
-
-    model_config = ConfigDict(extra='ignore', env_file=".env", env_file_encoding="utf-8")
-
-
-settings = Settings()
+class Config:
+    SECRET_KEY = config_env.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = config_env.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///site.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

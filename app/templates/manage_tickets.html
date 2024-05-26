@@ -4,7 +4,17 @@
     <h2>Manage Tickets</h2>
     <ul>
         {% for ticket in tickets %}
-            <li>{{ ticket.note }} - {{ ticket.status }}</li>
+            <li>
+                {{ ticket.note }} - {{ ticket.status }}
+                <form method="POST" action="{{ url_for('change_status', ticket_id=ticket.id) }}">
+                    <select name="status">
+                        <option value="Pending" {% if ticket.status == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="In review" {% if ticket.status == 'In review' %}selected{% endif %}>In review</option>
+                        <option value="Closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
+                    </select>
+                    <button type="submit" class="change-status-button">Change Status</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

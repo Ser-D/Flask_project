@@ -6,6 +6,13 @@
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.note.label }} {{ form.note(class="form-control") }}
+            {% if current_user.role == 'Admin' %}
+                {{ form.group.label }}<br>
+                {{ form.group() }}<br>
+                {% for error in form.group.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-group">
             {{ form.submit(class="btn btn-primary") }}

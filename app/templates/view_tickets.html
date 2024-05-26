@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        .ticket-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        .ticket-info {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Your tickets:</h2>
+    <ul>
+        {% for (ticket, creator) in data %}
+            <div class="ticket-block">
+                <li>
+                    Ticket ID: {{ ticket.id }} <br>
+                    - <span class="ticket-info">Status: {{ ticket.status }}</span> - <br>
+                    Created by: <span class="ticket-info">{{ creator.username }}</span><br>
+                    (Role: {{ creator.role }})<br>
+                    <span class="ticket-info">Group Work: {{ ticket.group_work }}</span><br>
+                    Timestamp: {{ ticket.timestamp }}<br>
+                    Note: {{ ticket.note }}
+                </li>
+            </div>
+        {% endfor %}
+    </ul>
+</body>
+{% endblock %}
