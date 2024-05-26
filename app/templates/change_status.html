@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("{{ url_for('static', filename='img/background_image.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .content {
+            background-color: rgba(255, 255, 255, 0.8); /* Напівпрозорий білий фон для тексту */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .ticket-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px; /* Скруглення кутів */
+        }
+        .ticket-info {
+            font-weight: bold; /* Виділення жирним */
+        }
+        .change-status-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .change-status-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <h2>Your tickets:</h2>
+        <ul>
+            {% for (ticket, creator) in data %}
+                <div class="ticket-block">
+                    <li>
+                        Ticket ID: {{ ticket.id }} - <span class="ticket-info">Status: {{ ticket.status }}</span> - Created by: <span class="ticket-info">{{ creator.username }}</span><br>
+                        Note: {{ ticket.note }}<br>
+                        <span class="ticket-info">Group Work: {{ ticket.group_work }}</span><br>
+                        Timestamp: {{ ticket.timestamp }}<br>
+                        (Role: {{ creator.role }})<br>
+                        <form method="POST" action="{{ url_for('main.change_status', ticket_id=ticket.id) }}">
+                            <select name="status">
+                                <option value="Pending" {% if ticket.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                <option value="In review" {% if ticket.status == 'In review' %}selected{% endif %}>In review</option>
+                                <option value="Closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
+                            </select>
+                            <button type="submit" class="change-status-button">Change Status</button>
+                        </form>
+                    </li>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock %}
